@@ -56,7 +56,7 @@ do
 	echo "zcat 2-trim/${sampleID}trim_1.fq.gz | sed 's/\ 1\:N\:0.*$/\/1/g' >  ${myDir}/4A-assembly/${sampleID}processed_1.fq" >> ${scriptName}
 
 	#Repeat for reverse read
-	echo "zcat 2-trim/${sampleID}trim_2.fq.gz | sed 's/\ 1\:N\:0.*$/\/2/g'>>  ${myDir}/4A-assembly/${sampleID}processed_2.fq" >> ${scriptName}
+	echo "zcat 2-trim/${sampleID}trim_2.fq.gz | sed 's/\ 2\:N\:0.*$/\/2/g'>>  ${myDir}/4A-assembly/${sampleID}processed_2.fq" >> ${scriptName}
 
 	chmod u+x ${scriptName}
 

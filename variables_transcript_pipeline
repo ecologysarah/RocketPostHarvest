@@ -1,0 +1,40 @@
+#Define core varible then run pipeline elements
+
+#baseline directory - ensure this is a clean space with no directories
+#any metadata files needed should be placed in this directory
+
+#Base directory
+dir="/mnt/scratch/sbi9srj/Lama"
+
+#Location of raw data
+rawdir="/mnt/scratch/sbi9srj/Lama/2-trim"
+
+working_dir="/mnt/scratch/sbi9srj/Lama/3-assembly"
+
+in_dir="/mnt/scratch/sbi9srj/Lama/3-assembly"
+
+out_dir="/mnt/scratch/sbi9srj/Lama/4C-trinity"
+
+#Step 1 - transfer and rename raw data files.  This may need to be edited to merge any files that are associated with the same condition.
+#declare  input files - do not include _1.fastq.gz
+declare -a rawdata=(\
+"Gpul_cat"
+)
+
+#declare names of data files
+declare -a seqname=("Diplotaxis_tenuifolia")
+
+#Step 2 - Trim and compress, generate merge files for assembly
+
+#Step 2A - Option to add merged assembly to the analysis - # this out if not needed
+#mergename="PscaXX_241219_TAll"
+#seqname=( "${seqname[@]}" "${mergename}" )
+
+#Step 3 - Assembly_transcript_pipeline
+
+#Step 4 - Evigene Pipeline
+
+#Step 5 - Busco analysis - ensure copy of busco library ie metazoa_odb9 is in base directory 
+
+#Step 6 - RSEM
+#master_assembly="PscaXX_241219_Tcat_okay"

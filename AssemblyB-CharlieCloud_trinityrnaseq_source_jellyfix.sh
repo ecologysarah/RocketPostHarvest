@@ -5,8 +5,8 @@
 #SBATCH --tasks-per-node=1			
 #SBATCH --cpus-per-task=32			  
 #SBATCH --mem=360gb 				
-#SBATCH --error=ERR/assemble.%J			
-#SBATCH --output=OUT/assemble.%J			
+#SBATCH --error=/mnt/scratch/sbi9srj/Lama/ERR/assemble.%J			
+#SBATCH --output=/mnt/scratch/sbi9srj/Lama/OUT/assemble.%J			
 
 echo "Usable Environment Variables:"
 echo "============================="
@@ -26,11 +26,12 @@ module load charliecloud/0.20
 
 CCIMAGEDIR=/mnt/scratch/nodelete/CharlieCloud/images
 CCIMAGENAME=trinityrnaseq
-CCTARGET=/tmp/$USER/cc
+CCTARGET=/mnt/scratch/$USER/cc
+#/tmp/$USER/cc
 CCSCRATCH=/mnt/scratch
 # workingdir : folder for input and output files, needs to be an area in /mnt/scratch you already have read&write access  
 # Do not put a trailing / on end of workingdir
-workingdir=/mnt/scratch/sbi9srj/Lama/trinity_assembly_scripts
+workingdir=/mnt/scratch/sbi9srj/Lama/RNAscripts
 
 #expand the CC filesystem
 mkdir -p ${CCTARGET}
@@ -48,25 +49,23 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
 #call varibles
-source "${workingdir}/variables_transcript_pipeline"
+source ${workingdir}/variables_transcript_pipeline
 
 for (( i=0 ; i<\${#seqname[@]} ; i++ ));do
 
 # Script,trinity output file location needs to start with trinity
 Trinity --seqType fq \
-        --single "\${in_dir}/\${seqname[\${i}]}.fastq.gz" \
+        --left "/mnt/scratch/sbi9srj/Lama/4A-assembly/F_reads.fastq.gz" \
+        --right "/mnt/scratch/sbi9srj/Lama/4A-assembly/R_reads.fastq.gz" \
         --max_memory ${TOTAL_RAM}G \
         --CPU ${SLURM_CPUS_PER_TASK} \
-        --output "\${out_dir}/trinity_\${seqname[\${i}]}/" \
+        --output "\${dir}/4C-trinity_\${seqname[\${i}]}/" \
         --full_cleanup
 
-mv "\${out_dir}/trinity_\${seqname[\${i}]}.Trinity.fasta" "\${out_dir}/\${seqname[\${i}]}.fasta"
-mv "\${out_dir}/trinity_\${seqname[\${i}]}.Trinity.fasta.gene_trans_map" "\${out_dir}/\${seqname[\${i}]}.gene_trans_map"
+sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${dir}/4C-trinity_\${seqname[\${i}]}.fasta"
+sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${dir}/4C-trinity_\${seqname[\${i}]}.gene_trans_map"
 
-sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${out_dir}/\${seqname[\${i}]}.fasta"
-sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${out_dir}/\${seqname[\${i}]}.gene_trans_map"
-
-/usr/local/bin/trinityrnaseq/util/TrinityStats.pl "\${out_dir}/\${seqname[\${i}]}.fasta" > "\${out_dir}/\${seqname[\${i}]}_stats.txt"
+/usr/local/bin/trinityrnaseq/util/TrinityStats.pl "\${dir}/4C-trinity_\${seqname[\${i}]}.fasta" > "\${dir}/4C-trinity_\${seqname[\${i}]}_stats.txt"
 
 done
 
