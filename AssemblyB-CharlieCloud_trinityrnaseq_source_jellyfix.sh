@@ -62,10 +62,10 @@ Trinity --seqType fq \
         --output "\${dir}/4C-trinity_\${seqname[\${i}]}/" \
         --full_cleanup
 
-sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${dir}/4C-trinity_\${seqname[\${i}]}.fasta"
-sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${dir}/4C-trinity_\${seqname[\${i}]}.gene_trans_map"
+sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${dir}/4C-trinity_\${seqname[\${i}]}.Trinity.fasta"
+sed -i "s/TRINITY_DN/\${seqname[\${i}]}_/g" "\${dir}/4C-trinity_\${seqname[\${i}]}.Trinity.fasta.gene_trans_map"
 
-/usr/local/bin/trinityrnaseq/util/TrinityStats.pl "\${dir}/4C-trinity_\${seqname[\${i}]}.fasta" > "\${dir}/4C-trinity_\${seqname[\${i}]}_stats.txt"
+/usr/local/bin/trinityrnaseq/util/TrinityStats.pl "\${dir}/4C-trinity_\${seqname[\${i}]}.Trinity.fasta" > "\${dir}/4C-trinity_\${seqname[\${i}]}_stats.txt"
 
 done
 

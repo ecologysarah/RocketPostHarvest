@@ -9,7 +9,7 @@ myDir=/mnt/scratch/sbi9srj/Lama
 ##Set your username
 userProject=sbi9srj
 ##Set the slurm queue to use: defq for gomphus, epyc for iago, htc for hawk
-queue=epyc
+queue=jumbo
 ######
 
 sampleIDs=$(cat ${myDir}/1-download/SampleFileNames.txt)

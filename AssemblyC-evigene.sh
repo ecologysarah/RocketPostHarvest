@@ -32,7 +32,7 @@ cd ${myDir}/4C-evigene/${seqname[${i}]}_evigene18
 
 for (( i=0 ; i<${#seqname[@]} ; i++ ));do
 
-#tr2aacds.pl -mrnaseq "${myDir}/4B-trinity_${seqname[${i}]}.Trinity.fasta" -MINCDS=60 -NCPU=${SLURM_CPUS_PER_TASK} -MAXMEM=${SLURM_MEM_PER_NODE} -logfile -tidyup
+tr2aacds.pl -mrnaseq "${myDir}/4B-trinity_${seqname[${i}]}.Trinity.fasta" -MINCDS=60 -NCPU=${SLURM_CPUS_PER_TASK} -MAXMEM=${SLURM_MEM_PER_NODE} -logfile -tidyup
 
 cp "okayset/4B-trinity_${seqname[${i}]}.Trinity.okay.Trinity.fasta" "${myDir}/4C-evigene/${seqname[${i}]}_okay18.fasta"
 

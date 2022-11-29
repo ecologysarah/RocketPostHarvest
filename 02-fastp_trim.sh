@@ -13,7 +13,7 @@ ends=PE
 ##Indicate if you want to specify an adapter for SE reads (set as "" to omit)
 adapt=""
 ##Set the slurm queue to use: defq for gomphus, epyc for iago, htc for hawk
-queue=epyc
+queue=jumbo
 ######
 
 sampleIDs=$(cat ${myDir}/1-download/SampleFileNames.txt)

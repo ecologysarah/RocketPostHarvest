@@ -15,7 +15,7 @@ project="Stress and storage effects on gene expression in rocket salad"
 ##Set path to working directory on scratch
 SCRATCHPATH=/mnt/scratch/sbi9srj/Lama
 ##Paste in the URLs to your files here, e.g. DOWNLOADURL=("https://url1" "https://url2")
-DOWNLOADURL=("https://leopard.bios.cf.ac.uk/nextcloud/index.php/s/1is4yv1R2tk2ukq")
+DOWNLOADURL=("sbi9srj@archive.bios.cf.ac.uk:/mnt/archive/GROUP-sabhjr/sbi9srj/Rocket/BulkRNA.zip")
 #Set the slurm queue to use: defq for gomphus or iago, htc for hawk
 queue=defq
 ######
@@ -62,23 +62,24 @@ do
 	##Download the data
 	echo -e "
 	echo Downloading ${DOWNLOADURL[$url]}
-#	curl -sL ${DOWNLOADURL[$url]}/download > ${SCRATCHPATH}/1-download/download${url}.zip
+	rsync ${DOWNLOADURL[$url]} ${SCRATCHPATH}/1-download/
+	mv ${SCRATCHPATH}/1-download/BulkRNA.zip ${SCRATCHPATH}/1-download/download${url}.zip
         echo Download ${DOWNLOADURL[$url]} complete
 
 	##Save the run name to a variable and rename the zip file
-#	RUN=\$(unzip -Z -1 ${SCRATCHPATH}/1-download/download${url}.zip | head -n 1 | sed -E 's/(.+)\/$/\1/')
-#	mv ${SCRATCHPATH}/1-download/download${url}.zip ${SCRATCHPATH}/1-download/\${RUN}.zip
+	RUN=\$(unzip -Z -1 ${SCRATCHPATH}/1-download/download${url}.zip | head -n 1 | sed -E 's/(.+)\/$/\1/')
+	mv ${SCRATCHPATH}/1-download/download${url}.zip ${SCRATCHPATH}/1-download/\${RUN}.zip
 
 	##Copy the data to long term storage
-#	echo Copying \${RUN} to long term storage
+	echo Copying \${RUN} to long term storage
 	##cp ${SCRATCHPATH}/1-download/\${RUN}.zip ${SAVEPATH}/\${RUN}.zip
 
         ##Unzip the data
 	echo Unzipping \${RUN}
-#       unzip ${SCRATCHPATH}/1-download/\${RUN}.zip -d ${SCRATCHPATH}/1-download/
+       unzip ${SCRATCHPATH}/1-download/\${RUN}.zip -d ${SCRATCHPATH}/1-download/
 
 	##Remove the zipped file
-#	rm ${SCRATCHPATH}/1-download/\${RUN}.zip
+	rm ${SCRATCHPATH}/1-download/\${RUN}.zip
 
 	##Add run name to the report
 	echo ${RUN} >> ${SCRATCHPATH}/AnalysisReport.txt
