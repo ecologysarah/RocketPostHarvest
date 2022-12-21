@@ -6,17 +6,14 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=48
 #SBATCH --mem=10G
-#SBATCH --error=%J.err
-#SBATCH --output=%J.out
-#SBATCH --mail-user=dhorajiwalar@cardiff.ac.uk  # email address used for event notification
-#SBATCH --mail-type=all                                   # email on job start, failure and end
-
+#SBATCH --error=ERR/blast.%J
+#SBATCH --output=OUT/blast.%J
 
 module load blast/2.12.0
 
        
-blastx -query /mnt/scratch/c1203192/tmpblast/trinity_all.Trinity.okay.tr \
-       -db /mnt/scratch/c1203192/tmpblast/db/plants \
+blastx -query /mnt/scratch/sbi9srj/Lama/4C-evigene/Diplotaxis_tenuifolia_evigene18/okayset/4B-trinity_Diplotaxis_tenuifolia.Trinity.okay.Trinity.fasta \
+       -db  /mnt/scratch/sbi9srj/Lama/blast_db/my_db.pdb \
        -num_threads ${SLURM_CPUS_PER_TASK} \
        -max_target_seqs 1 \
        -evalue 1E-10 \
